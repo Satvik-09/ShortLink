@@ -7,8 +7,7 @@ Spring Boot REST backend with Base62 short codes, JWT authentication, Docker Com
 </p>
 
 <p align="center">
-  <img src="[![CI](https://github.com/Satvik-09/URL-Shortener-Analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/Satvik-09/URL-Shortener-Analytics/actions/workflows/ci.yml)" alt="CI status">
-  <img src="https://img.shields.io/badge/Java-21-orange" alt="Java 21">
+ [![CI](https://github.com/Satvik-09/URL-Shortener-Analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/Satvik-09/URL-Shortener-Analytics/actions/workflows/ci.yml) 
   <img src="https://img.shields.io/badge/Spring%20Boot-4.1.1-6DB33F" alt="Spring Boot 4.1.1">
   <img src="https://img.shields.io/badge/MySQL-8.0-4479A1" alt="MySQL 8.0">
   <img src="https://img.shields.io/badge/Docker-Compose-2496ED" alt="Docker Compose">
@@ -47,7 +46,7 @@ ShortLink converts long URLs into compact, unique short codes and redirects visi
 | Shorten a URL | ![Shorten](docs/images/cmd-shorten.png) |
 | Redirect to the original URL | ![Redirect](docs/images/redirect-cmd.png) |
 | Login returns a JWT | ![Login](docs/images/login-cmd.png) |
-| Protected route without a token is rejected | ![Denied](docs/images/protected-test cmd.png) |
+| Protected route without a token is rejected | ![Denied](docs/images/protected-test-cmd.png) |
 | Protected route with a token succeeds | ![Allowed](docs/images/protected-test-success.png) |
 | CI passing on GitHub Actions | ![CI](docs/images/ci-actions.png) |
 

@@ -42,11 +42,11 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request){
         UserEntity user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(() -> new RuntimeException("User Not Found"));
+                .orElse(null);
 
-        if(!passwordEncoder.matches(request.getPassword(),user.getPassword())){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
-        }
+          if(user == null || !passwordEncoder.matches(request.getPassword(),user.getPassword())){
+              return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Credentials");
+          }
 
          String token = jwtUtil.generateToken(user.getUsername());
         return ResponseEntity.ok(token);

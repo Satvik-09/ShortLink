@@ -57,8 +57,8 @@ TESTED USING CURL INSIDE THE COMMAND PROMPT
 Microsoft Windows [Version 10.0.19045.7725]
 (c) Microsoft Corporation. All rights reserved.
 
-C:\Users\dell>curl -i -X POST http://localhost:8080/auth/register -H "Content-Type: application/json" -d "{\"username\": \"satvik\", \"password\": \"pass123\"}"
-HTTP/1.1 200
+C:\Users\dellcurl -i -X POST http://localhost:8080/auth/register -H "Content-Type: application/json" -d "{\"username\": \"demo\", \"password\": \"pass123\"}"
+>HTTP/1.1 200
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
 Cache-Control: no-cache, no-store, max-age=0, must-revalidate
@@ -70,7 +70,7 @@ Content-Length: 23
 Date: Mon, 05 Oct 2026 18:49:39 GMT
 
 Registered Successfully
-C:\Users\dell>curl -i -X POST http://localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\": \"satvik\", \"password\": \"pass123\"}"
+C:\Users\dell>curl -i -X POST http://localhost:8080/auth/login -H "Content-Type: application/json" -d "{\"username\": \"demo\", \"password\": \"pass123\"}"
 HTTP/1.1 200
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
@@ -123,7 +123,7 @@ Transfer-Encoding: chunked
 Date: Mon, 05 Oct 2026 18:50:41 GMT
 
 {"timestamp":"2026-10-05T18:50:41.496Z","status":403,"error":"Forbidden","path":"/admin/test"}
-C:\Users\dell>curl -i -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzYXR2aWsiLCJpYXQiOjE3OTEyMjYxODksImV4cCI6MTc5MTIyOTc4OX0.dta8aiNg2GuzNWJmLsOIG65CmGtcGUsh07VhE-1n9u0" http://localhost:8080/admin/test
+C:\Users\dell>curl -i -H "Authorization: Bearer  eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkZW1vIiwiaWF0IjoxNzkxNzExMTU4LCJleHAiOjE3OTE3MTQ3NTh9.zdcs0XECHmmROIEkUCiW232nM14Vp-WUOrk_oEbh13o" http://localhost:8080/auth/protected-test
 HTTP/1.1 404
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 0
@@ -137,3 +137,5 @@ Date: Mon, 05 Oct 2026 18:51:45 GMT
 
 {"timestamp":"2026-10-05T18:51:45.504Z","status":404,"error":"Not Found","path":"/admin/test"}
 C:\Users\dell>
+
+curl -i -X POST http://localhost:8080/shorten -H "Content-Type: application/json" -d "{\"url\": "https://github.com/Satvik-09"}"

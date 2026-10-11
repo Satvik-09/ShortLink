@@ -7,12 +7,12 @@ Spring Boot REST backend with Base62 short codes, JWT authentication, Docker Com
 </p>
 
 <p align="center">
-  <img src="https://github.com/Satvik-09/URL-Shortener-Analytics/actions/workflows/ci.yml/badge.svg" alt="CI status">
+  <img src="https://github.com/Satvik-09/ShortLink/actions/workflows/ci.yml/badge.svg" alt="CI status">
   <img src="https://img.shields.io/badge/Java-21-orange" alt="Java 21">
   <img src="https://img.shields.io/badge/Spring%20Boot-4.1.1-6DB33F" alt="Spring Boot 4.1.1">
   <img src="https://img.shields.io/badge/MySQL-8.0-4479A1" alt="MySQL 8.0">
   <img src="https://img.shields.io/badge/Docker-Compose-2496ED" alt="Docker Compose">
-  <img src="https://img.shields.io/github/last-commit/Satvik-09/URL-Shortener-Analytics" alt="Last commit">
+  <img src="https://img.shields.io/github/last-commit/Satvik-09/ShortLink" alt="Last commit">
 </p>
 
 ---
@@ -189,8 +189,8 @@ Validation failures return field-level messages, for example:
 - Maven (or use the included `mvnw` wrapper)
 
 ```bash
-git clone https://github.com/Satvik-09/URL-Shortener-Analytics.git
-cd URL-Shortener-Analytics
+git clone https://github.com/Satvik-09/ShortLink.git
+cd ShortLink
 docker-compose up --build
 ```
 

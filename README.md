@@ -102,6 +102,19 @@ MySQL
 
 GlobalExceptionHandler wraps the controller, service and repository layers
 and converts exceptions into JSON error responses.
+Client Request
+      |
+      v
+JwtFilter -- reads the Authorization header, validates the Bearer token
+      |
+      v
+SecurityConfig -- is this route public, or does it need authentication / a role?
+      |
+      v
+Controller --> Service --> Repository --> Database
+
+GlobalExceptionHandler wraps the Controller -> Service -> Repository chain
+and converts exceptions into consistent JSON error responses.
 ```
 
 | Component | Responsibility |
@@ -154,6 +167,14 @@ Validation failures return field-level messages, for example:
 | Wrong username or password | 401 | `Invalid Credentials` |
 | Missing or invalid token on a protected route | 403 | empty |
 | Unknown short code | 404 | `{"error": "No URL found for code: abc"}` |
+| Method | Endpoint | Auth required | Description |
+|---|---|---|---|
+| POST | `/auth/register` | No | Register a new user |
+| POST | `/auth/login` | No | Authenticate and receive a JWT |
+| POST | `/shorten` | No | Shorten a long URL |
+| GET | `/{code}` | No | Redirect to the original URL |
+| GET | `/protected-test` | Yes (Bearer token) | Example protected route |
+| ANY | `/admin/**` | Yes (`ADMIN` role) | Admin-only routes |
 
 ## Getting Started
 
@@ -163,6 +184,9 @@ Validation failures return field-level messages, for example:
 - Java 21 (only needed to run without Docker)
 
 ### Run with Docker Compose
+- Java 21
+- Docker Desktop
+- Maven (or use the included `mvnw` wrapper)
 
 ```bash
 git clone https://github.com/Satvik-09/URL-Shortener-Analytics.git
@@ -171,6 +195,8 @@ docker-compose up --build
 ```
 
 The API is then available at `http://localhost:8080`. Database data lives in a named Docker volume.
+
+This starts the application and a MySQL container. Database data is stored in a named Docker volume, so it survives restarts.
 
 ```bash
 docker-compose down       # stop containers, keep data
@@ -181,14 +207,19 @@ After changing code, run `docker-compose up --build` again. Images are snapshots
 
 ### Run locally without Docker
 
+After changing code, re-run `docker-compose up --build`. Images are snapshots, so a rebuild is required for changes to appear.
+
+### Run locally without Docker
 ```bash
 ./mvnw spring-boot:run
 ```
+Uses an in-memory H2 database, so data is lost on every restart.
 
 This uses an in-memory H2 database, so data resets on every restart.
 
 ### Try it
 
+**Register**
 ```bash
 # Register and log in
 curl -X POST http://localhost:8080/auth/register \
@@ -200,6 +231,15 @@ curl -X POST http://localhost:8080/auth/login \
   -d '{"username": "demo", "password": "pass123"}'
 
 # Shorten a URL
+**Login** (returns a JWT)
+```bash
+curl -X POST http://localhost:8080/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"username": "satvik", "password": "pass123"}'
+```
+
+**Shorten a URL**
+```bash
 curl -X POST http://localhost:8080/shorten \
   -H "Content-Type: application/json" \
   -d '{"url": "https://www.example.com"}'
@@ -208,6 +248,11 @@ curl -X POST http://localhost:8080/shorten \
 curl -H "Authorization: Bearer <token>" http://localhost:8080/protected-test
 ```
 ### Troubleshooting
+**Call a protected route**
+```bash
+curl -H "Authorization: Bearer <your-token>" http://localhost:8080/protected-test
+```
+A missing or tampered token returns `403`.
 
 | Symptom | Cause | Fix |
 |---|---|---|
@@ -251,6 +296,21 @@ A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `ma
 - **Stateless authentication.** The server stores no sessions, because the signed token carries the proof of identity.
 - **Multi-stage Docker build.** The first stage compiles with Maven and a JDK, and the final image contains only a JRE and the JAR.
 - **Named volume for MySQL.** Data survives container restarts and rebuilds.
+Test coverage:
+- `Base62Test`: encode/decode round trip
+- `UrlServiceTest`: short code generation and the not-found case, using a mocked repository (Mockito)
+- `JwtUtilTest`: token generation and validation, plus rejection of tampered tokens
+
+## Continuous Integration
+
+A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `main` and on every pull request targeting `main`. It checks out the code, sets up JDK 21, and runs `./mvnw test`. The badge at the top of this README shows the current status.
+
+## Development Workflow
+
+- Work is tracked as GitHub Issues
+- Each change is developed on a feature branch (for example `feature/junit-tests`)
+- Changes are merged through pull requests that reference the issue (`Closes #N`)
+- CI must pass before merging
 
 ## Known Limitations and Roadmap
 
@@ -261,3 +321,12 @@ A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `ma
 ## Author
 
 Satvik, [GitHub](https://github.com/Satvik-09)
+- Redis caching for frequently accessed short URL lookups
+- Move the JWT secret and database credentials out of source and into environment variables or a secrets manager
+- Refresh token support
+- Rate limiting on `/shorten`
+- Deployment to a cloud host
+
+## Author
+
+Satvik: [GitHub](https://github.com/Satvik-09)

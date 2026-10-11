@@ -318,9 +318,7 @@ A GitHub Actions workflow (`.github/workflows/ci.yml`) runs on every push to `ma
 - Roles are stored per user but are not yet loaded into the security context, so role-restricted routes are not enforced.
 - Planned: click analytics per short link, Redis caching for redirect lookups, refresh tokens, rate limiting on `/shorten`, and cloud deployment.
 
-## Author
-
-Satvik, [GitHub](https://github.com/Satvik-09)
+## Future Improvements and Goals
 - Redis caching for frequently accessed short URL lookups
 - Move the JWT secret and database credentials out of source and into environment variables or a secrets manager
 - Refresh token support

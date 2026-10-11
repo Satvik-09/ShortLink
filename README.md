@@ -47,7 +47,7 @@ ShortLink converts long URLs into compact, unique short codes and redirects visi
 | Shorten a URL | ![Shorten](docs/images/cmd-shorten.png) |
 | Redirect to the original URL | ![Redirect](docs/images/redirect-cmd.png) |
 | Login returns a JWT | ![Login](docs/images/login-cmd.png) |
-| Protected route without a token is rejected | ![Denied](docs/images/protected-test cmd.png) |
+| Protected route without a token is rejected | ![Denied](docs/images/protected-test-cmd.png) |
 | Protected route with a token succeeds | ![Allowed](docs/images/protected-test-success.png) |
 | CI passing on GitHub Actions | ![CI](docs/images/ci-actions.png) |
 
